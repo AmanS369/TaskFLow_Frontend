@@ -1,36 +1,54 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# TaskFlow (A Task Manager Application)
 
-## Getting Started
+## Important Links:
 
-First, run the development server:
+- Depolyment Link : [TaskFlow](https://task-flow.live)
+- The Backend repo : [Backend ](https://github.com/AmanS369/TaskFlow)
+- The frontend repo : [Frontend](https://github.com/AmanS369/TaskFLow_Frontend)
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+## Features 🌟
+
+✅ - **Effortless Task Management** : Create, update, and track your to-do tasks seamlessly. Stay organized by categorizing tasks into distinct groups for better prioritization and focus.
+
+✅ - **Comprehensive Dashboard** : A user-friendly dashboard that provides a quick summary of tasks, highlights pending and due tasks for the day, and ensures you never miss a deadline.
+
+✅- **Advanced Filtering Options** : Refine your task list with powerful filters based on due date, date range, priority, and groups, enabling you to focus on what matters most.
+
+## Tech stack used:
+
+![Next.js](https://img.shields.io/badge/next.js-000000?style=for-the-badge&logo=nextdotjs&logoColor=white)
+![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-grey?style=for-the-badge&logo=tailwind-css&logoColor=38B2AC)![Shadcn](https://img.shields.io/badge/shadcn/ui-000000?style=for-the-badge&logo=shadcn/ui&logoColor=white)
+
+## Tools used
+
+![Vercel](https://img.shields.io/badge/Vercel-000000?style=for-the-badge&logo=vercel&logoColor=white)
+
+![Visual Studio Code](https://img.shields.io/badge/Visual%20Studio%20Code-0078d7.svg?style=for-the-badge&logo=visual-studio-code&logoColor=white)
+
+## Installation
+
+1. Clone the repo `git clone https://github.com/AmanS369/TaskFLow_Frontend`
+2. Run `npm install`
+3. create `.env` and add the necessary variables' values.
+
+```
+NEXT_PUBLIC_API_URL=""
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Running the project
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+- Run
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+  ```
+  npm run dev
+  ```
 
-## Learn More
+## 1. Why do I choose Next.js ?
 
-To learn more about Next.js, take a look at the following resources:
+- Server-Side Rendering (SSR): Next.js provides built-in support for SSR, improving page load speed and delivering a better user experience, especially for dynamic content like dashboards.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- Simplified Routing: Its file-based routing system makes it easy to manage pages, ideal for an application like TaksFlwo with multiple views (dashboard, tasks, etc.).
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+- Community and Ecosystem Support: Next.js has a strong and active community, with plenty of plugins and tools that make development faster and more efficient, helping developers ship features quickly.
 
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- Performance Optimization: Next.js automatically optimizes assets and pages, keeping the app fast and efficient with minimal manual intervention.
