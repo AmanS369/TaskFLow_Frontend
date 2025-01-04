@@ -320,7 +320,7 @@ const AllTask = () => {
             </Popover>
 
             {/* Filters Button - Mobile Optimization */}
-            <Popover>
+            {/* <Popover>
               <PopoverTrigger asChild>
                 <Button
                   variant="outline"
@@ -330,16 +330,16 @@ const AllTask = () => {
                   <span className="hidden sm:inline">Filters</span>
                 </Button>
               </PopoverTrigger>
-              <PopoverContent className="w-[280px] p-3" align="end">
-                <TaskFilters
-                  filters={filters}
-                  setFilters={setFilters}
-                  selectedGroups={selectedGroups}
-                  handleGroupToggle={handleGroupToggle}
-                  groups={groups}
-                />
-              </PopoverContent>
-            </Popover>
+              <PopoverContent className="w-[280px] p-3" align="end"> */}
+            <TaskFilters
+              filters={filters}
+              setFilters={setFilters}
+              selectedGroups={selectedGroups}
+              handleGroupToggle={handleGroupToggle}
+              groups={groups}
+            />
+            {/* </PopoverContent>
+            </Popover> */}
           </div>
         </div>
       </div>

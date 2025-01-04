@@ -14,6 +14,13 @@
 
 ✅- **Advanced Filtering Options** : Refine your task list with powerful filters based on due date, date range, priority, and groups, enabling you to focus on what matters most.
 
+## Project ScreenShot
+
+DashBoard Page :
+![1736009553219](image/README/1736009553219.png)
+
+All Task Page:
+
 ## Tech stack used:
 
 ![Next.js](https://img.shields.io/badge/next.js-000000?style=for-the-badge&logo=nextdotjs&logoColor=white)
@@ -46,9 +53,6 @@ NEXT_PUBLIC_API_URL=""
 ## 1. Why do I choose Next.js ?
 
 - Server-Side Rendering (SSR): Next.js provides built-in support for SSR, improving page load speed and delivering a better user experience, especially for dynamic content like dashboards.
-
 - Simplified Routing: Its file-based routing system makes it easy to manage pages, ideal for an application like TaksFlwo with multiple views (dashboard, tasks, etc.).
-
 - Community and Ecosystem Support: Next.js has a strong and active community, with plenty of plugins and tools that make development faster and more efficient, helping developers ship features quickly.
-
 - Performance Optimization: Next.js automatically optimizes assets and pages, keeping the app fast and efficient with minimal manual intervention.
