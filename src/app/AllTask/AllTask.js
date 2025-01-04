@@ -236,154 +236,169 @@ const AllTask = () => {
   };
 
   return (
-    <div className="w-full p-6 space-y-6 bg-white dark:bg-gray-900">
-      <div className="flex justify-between items-center">
-        <h1 className="text-2xl font-semibold dark:text-white">Tasks</h1>
+    <div className="w-full px-4 py-4 md:p-6 space-y-4 md:space-y-6 bg-white dark:bg-gray-900">
+      {/* Header - Responsive layout */}
+      <div className="flex flex-col md:flex-row md:justify-between md:items-center gap-4">
+        <h1 className="text-xl md:text-2xl font-semibold dark:text-white">
+          Tasks
+        </h1>
         <TaskForm />
       </div>
 
-      <div className="space-y-4">
-        <div className="flex items-center gap-3">
-          {/* Search Input */}
+      {/* Filters Section - Stack on mobile */}
+      <div className="space-y-3 md:space-y-4">
+        <div className="flex flex-col md:flex-row gap-3">
+          {/* Search - Full width on mobile */}
           <div className="relative flex-1">
-            <Search className="absolute left-2 top-2.5 h-4 w-3 text-gray-500 dark:text-gray-400" />
+            <Search className="absolute left-2 top-2.5 h-4 w-4 text-gray-500 dark:text-gray-400" />
             <Input
               placeholder="Search tasks..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="pl-8 bg-white dark:bg-gray-800"
+              className="pl-8 w-full bg-white dark:bg-gray-800"
             />
           </div>
 
-          {/* Date Range Picker */}
-          <Popover>
-            <PopoverTrigger asChild>
-              <Button
-                variant="outline"
-                className={cn(
-                  "gap-2 dark:bg-gray-800 dark:text-white dark:border-gray-700 relative pr-8 whitespace-nowrap",
-                  (dateRange.startDate || dateRange.endDate) && "text-primary",
-                )}
-              >
-                <Calendar className="h-4 w-4" />
-                <span className="hidden sm:inline">
-                  {dateRange.startDate && dateRange.endDate
-                    ? `${format(
-                        new Date(dateRange.startDate),
-                        "LLL dd, y",
-                      )} - ${format(new Date(dateRange.endDate), "LLL dd, y")}`
-                    : "Select dates"}
-                </span>
-                <span className="sm:hidden">Date</span>
-                {(dateRange.startDate || dateRange.endDate) && (
-                  <X
-                    className="absolute right-2 h-4 w-4 cursor-pointer"
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      clearDateRange();
-                    }}
-                  />
-                )}
-              </Button>
-            </PopoverTrigger>
-            <PopoverContent className="p-4 space-y-4" align="end">
-              <div className="space-y-2">
-                <div className="grid gap-2">
-                  <label className="text-sm font-medium">Start Date</label>
-                  <Input
-                    type="date"
-                    value={dateRange.startDate}
-                    onChange={(e) =>
-                      setDateRange({ ...dateRange, startDate: e.target.value })
-                    }
-                    max={dateRange.endDate}
-                  />
+          {/* Filter Controls - Horizontal scroll on mobile */}
+          <div className="flex gap-2 overflow-x-auto pb-2 md:pb-0">
+            {/* Date Range Picker */}
+            <Popover>
+              <PopoverTrigger asChild>
+                <Button
+                  variant="outline"
+                  className={cn(
+                    "gap-2 dark:bg-gray-800 dark:text-white dark:border-gray-700 whitespace-nowrap min-w-[120px] md:min-w-0",
+                    (dateRange.startDate || dateRange.endDate) &&
+                      "text-primary",
+                  )}
+                >
+                  <Calendar className="h-4 w-4" />
+                  <span className="hidden sm:inline">
+                    {dateRange.startDate && dateRange.endDate
+                      ? `${format(
+                          new Date(dateRange.startDate),
+                          "MMM d",
+                        )} - ${format(new Date(dateRange.endDate), "MMM d")}`
+                      : "Date"}
+                  </span>
+                  <span className="sm:hidden">Date</span>
+                </Button>
+              </PopoverTrigger>
+              <PopoverContent className="w-[280px] p-3" align="start">
+                {/* Date picker content */}
+                <div className="space-y-2">
+                  <div className="grid gap-2">
+                    <label className="text-sm font-medium">Start Date</label>
+                    <Input
+                      type="date"
+                      value={dateRange.startDate}
+                      onChange={(e) =>
+                        setDateRange({
+                          ...dateRange,
+                          startDate: e.target.value,
+                        })
+                      }
+                      className="w-full"
+                      max={dateRange.endDate}
+                    />
+                  </div>
+                  <div className="grid gap-2">
+                    <label className="text-sm font-medium">End Date</label>
+                    <Input
+                      type="date"
+                      value={dateRange.endDate}
+                      onChange={(e) =>
+                        setDateRange({ ...dateRange, endDate: e.target.value })
+                      }
+                      className="w-full"
+                      min={dateRange.startDate}
+                    />
+                  </div>
                 </div>
-                <div className="grid gap-2">
-                  <label className="text-sm font-medium">End Date</label>
-                  <Input
-                    type="date"
-                    value={dateRange.endDate}
-                    onChange={(e) =>
-                      setDateRange({ ...dateRange, endDate: e.target.value })
-                    }
-                    min={dateRange.startDate}
-                  />
-                </div>
-              </div>
-            </PopoverContent>
-          </Popover>
+              </PopoverContent>
+            </Popover>
 
-          {/* Task Filters */}
-          <TaskFilters
-            filters={filters}
-            setFilters={setFilters}
-            selectedGroups={selectedGroups}
-            handleGroupToggle={handleGroupToggle}
-            groups={groups}
-          />
+            {/* Filters Button - Mobile Optimization */}
+            <Popover>
+              <PopoverTrigger asChild>
+                <Button
+                  variant="outline"
+                  className="gap-2 dark:bg-gray-800 dark:text-white dark:border-gray-700"
+                >
+                  <Filter className="h-4 w-4" />
+                  <span className="hidden sm:inline">Filters</span>
+                </Button>
+              </PopoverTrigger>
+              <PopoverContent className="w-[280px] p-3" align="end">
+                <TaskFilters
+                  filters={filters}
+                  setFilters={setFilters}
+                  selectedGroups={selectedGroups}
+                  handleGroupToggle={handleGroupToggle}
+                  groups={groups}
+                />
+              </PopoverContent>
+            </Popover>
+          </div>
         </div>
       </div>
 
-      <div className="space-y-4">
+      {/* Tasks List */}
+      <div className="space-y-3 md:space-y-4">
         {filteredTasks.length > 0 ? (
           filteredTasks.map((task) => (
             <Card
               key={task.id}
               className="hover:shadow-md transition-shadow dark:bg-gray-800 dark:border-gray-700"
             >
-              <CardContent
-                className="p-4 cursor-pointer"
-                onClick={(e) => {
-                  if (
-                    !e.target.closest(".checkbox-container") &&
-                    !e.target.closest('[role="menuitem"]') &&
-                    !e.target.closest("[data-state]")
-                  ) {
-                    setopenTask(task);
-                    setIsDetailsModalOpen(true);
-                  }
-                }}
-              >
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center gap-4">
-                    <Checkbox
-                      checked={task.is_complete}
-                      onCheckedChange={() =>
-                        handleTaskComplete(
-                          task.id,
-                          task.title,
-                          task.is_complete,
-                        )
-                      }
-                      className="dark:border-gray-600"
-                    />
-                    <div>
+              <CardContent className="p-3 md:p-4">
+                <div className="flex items-start md:items-center justify-between gap-3">
+                  <div className="flex items-start gap-3 flex-1">
+                    <div className="pt-1 md:pt-0">
+                      <Checkbox
+                        checked={task.is_complete}
+                        onCheckedChange={() =>
+                          handleTaskComplete(
+                            task.id,
+                            task.title,
+                            task.is_complete,
+                          )
+                        }
+                        className="dark:border-gray-600"
+                      />
+                    </div>
+                    <div
+                      className="flex-1"
+                      onClick={() => {
+                        setopenTask(task);
+                        setIsDetailsModalOpen(true);
+                      }}
+                    >
                       <h3
                         className={cn(
-                          "text-lg font-medium dark:text-white",
+                          "text-base md:text-lg font-medium dark:text-white line-clamp-2",
                           task.is_complete &&
                             "line-through text-gray-500 dark:text-gray-400",
                         )}
                       >
                         {task.title}
                       </h3>
-                      <div className="flex items-center gap-2 mt-1">
-                        <span className="text-sm text-gray-500 dark:text-gray-400">
-                          Due: {format(new Date(task.due_date), "MMM dd, yyyy")}
+                      <div className="flex flex-wrap items-center gap-2 mt-1">
+                        <span className="text-xs md:text-sm text-gray-500 dark:text-gray-400">
+                          {format(new Date(task.due_date), "MMM dd")}
                         </span>
-                        <span className="text-sm text-gray-500 dark:text-gray-400">
+                        <span className="text-xs md:text-sm text-gray-500 dark:text-gray-400">
                           ·
                         </span>
-                        <span className="text-sm text-gray-500 dark:text-gray-400">
+                        <span className="text-xs md:text-sm text-gray-500 dark:text-gray-400">
                           {task.group_name}
                         </span>
-                        <span className="text-sm text-gray-500 dark:text-gray-400">
+                        <span className="text-xs md:text-sm text-gray-500 dark:text-gray-400">
                           ·
                         </span>
                         <span
                           className={cn(
-                            "text-sm px-2 py-0.5 rounded-full",
+                            "text-xs md:text-sm px-2 py-0.5 rounded-full",
                             priorityConfig[task.priority].color,
                             priorityConfig[task.priority].bg,
                           )}
@@ -405,7 +420,7 @@ const AllTask = () => {
                     </DropdownMenuTrigger>
                     <DropdownMenuContent
                       align="end"
-                      className="dark:bg-gray-800"
+                      className="dark:bg-gray-800 w-[160px]"
                     >
                       <DropdownMenuItem
                         className="gap-2 dark:text-gray-200 dark:focus:bg-gray-700"
@@ -435,6 +450,7 @@ const AllTask = () => {
         )}
       </div>
 
+      {/* Modals and Dialogs */}
       {isTaskFormOpen && <TaskForm onClose={() => setIsTaskFormOpen(false)} />}
       {selectedTask && (
         <UpdateForm
@@ -454,7 +470,7 @@ const AllTask = () => {
       )}
 
       <AlertDialog open={deleteConfirmOpen} onOpenChange={setDeleteConfirmOpen}>
-        <AlertDialogContent className="sm:max-w-[425px] bg-white dark:bg-gray-800 border dark:border-gray-700">
+        <AlertDialogContent className="w-[90%] max-w-[425px] bg-white dark:bg-gray-800 border dark:border-gray-700">
           <AlertDialogHeader>
             <AlertDialogTitle className="text-xl font-semibold text-gray-900 dark:text-gray-100">
               Delete Task
