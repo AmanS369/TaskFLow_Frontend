@@ -21,7 +21,6 @@ import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import PropTypes from "prop-types";
 
 export const TaskForm = ({ group }) => {
   const [isOpen, setIsOpen] = useState(false);
