@@ -16,10 +16,17 @@
 
 ## Project ScreenShot
 
-DashBoard Page :
+### DashBoard Page :
+
 ![1736009553219](image/README/1736009553219.png)
 
-All Task Page:
+### All Task Page with Filters:
+
+![1736010592278](image/README/1736010592278.png)
+
+### Group Page
+
+![1736010649257](image/README/1736010649257.png)
 
 ## Tech stack used:
 
