@@ -25,6 +25,7 @@ import {
   Search,
   Calendar,
   X,
+  Filter,
 } from "lucide-react";
 import {
   AlertDialog,
@@ -36,7 +37,7 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
-import { format, isValid } from "date-fns";
+import { format } from "date-fns";
 import { cn } from "@/lib/utils";
 import TaskDetailsModal from "./TaskDetailModal";
 import TaskFilters from "./TaskFilter";
