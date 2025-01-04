@@ -6,7 +6,6 @@ import { TaskForm, UpdateForm } from "./TaskComponent";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Calendar } from "@/components/ui/calendar";
 import {
   Popover,
   PopoverContent,
@@ -20,11 +19,11 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Checkbox } from "@/components/ui/checkbox";
 import {
-  Calendar as CalendarIcon,
   MoreHorizontal,
   Pencil,
   Trash2,
   Search,
+  Calendar,
   X,
 } from "lucide-react";
 import {
@@ -36,13 +35,11 @@ import {
   AlertDialogFooter,
   AlertDialogHeader,
   AlertDialogTitle,
-  AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
 import { format, isValid } from "date-fns";
 import { cn } from "@/lib/utils";
 import TaskDetailsModal from "./TaskDetailModal";
 import TaskFilters from "./TaskFilter";
-
 const AllTask = () => {
   const { taskUpdate, triggerTaskUpdate } = useTaskContext();
   const [tasks, setTasks] = useState([]);
@@ -53,9 +50,10 @@ const AllTask = () => {
 
   const [isTaskFormOpen, setIsTaskFormOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
-  const [date, setDate] = useState({
-    from: null,
-    to: null,
+
+  const [dateRange, setDateRange] = useState({
+    startDate: "",
+    endDate: "",
   });
   const [filters, setFilters] = useState({
     sortBy: "recent",
@@ -91,7 +89,7 @@ const AllTask = () => {
 
   useEffect(() => {
     applyFilters();
-  }, [tasks, filters, date, selectedGroups, searchQuery]);
+  }, [tasks, filters, dateRange, selectedGroups, searchQuery]);
 
   const fetchTasks = async () => {
     try {
@@ -153,9 +151,9 @@ const AllTask = () => {
   };
 
   const clearDateRange = () => {
-    setDate({
-      from: null,
-      to: null,
+    setDateRange({
+      startDate: "",
+      endDate: "",
     });
   };
 
@@ -207,18 +205,20 @@ const AllTask = () => {
       filtered = filtered.filter((task) => task.priority === filters.priority);
     }
 
-    if (date.from && date.to) {
+    if (dateRange.startDate && dateRange.endDate) {
       filtered = filtered.filter((task) => {
+        if (!task.due_date) return false;
+
         const taskDate = new Date(task.due_date);
+        const startDate = new Date(dateRange.startDate);
+        const endDate = new Date(dateRange.endDate);
+
         taskDate.setHours(0, 0, 0, 0);
-        const fromDate = new Date(date.from);
-        const toDate = new Date(date.to);
-        fromDate.setHours(0, 0, 0, 0);
-        toDate.setHours(23, 59, 59, 999);
-        return taskDate >= fromDate && taskDate <= toDate;
+        startDate.setHours(0, 0, 0, 0);
+        endDate.setHours(23, 59, 59, 999);
+        return taskDate >= startDate && taskDate <= endDate;
       });
     }
-
     if (filters.dueDate !== "all") {
       filtered = filtered.filter((task) => {
         const taskDueDate = new Date(task.due_date);
@@ -262,55 +262,55 @@ const AllTask = () => {
                 variant="outline"
                 className={cn(
                   "gap-2 dark:bg-gray-800 dark:text-white dark:border-gray-700 relative pr-8 whitespace-nowrap",
-                  date.from && "text-primary",
+                  (dateRange.startDate || dateRange.endDate) && "text-primary",
                 )}
               >
-                <CalendarIcon className="h-4 w-4" />
+                <Calendar className="h-4 w-4" />
                 <span className="hidden sm:inline">
-                  {date.from ? (
-                    date.to ? (
-                      <>
-                        {format(date.from, "LLL dd, y")} -{" "}
-                        {format(date.to, "LLL dd, y")}
-                      </>
-                    ) : (
-                      format(date.from, "LLL dd, y")
-                    )
-                  ) : (
-                    "Select date"
-                  )}
+                  {dateRange.startDate && dateRange.endDate
+                    ? `${format(
+                        new Date(dateRange.startDate),
+                        "LLL dd, y",
+                      )} - ${format(new Date(dateRange.endDate), "LLL dd, y")}`
+                    : "Select dates"}
                 </span>
                 <span className="sm:hidden">Date</span>
-                {date.from && (
-                  <span
-                    role="button"
-                    tabIndex={0}
-                    className="absolute right-2 top-1/2 -translate-y-1/2 h-4 w-4 rounded-sm opacity-70 ring-offset-background transition-opacity hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 cursor-pointer"
+                {(dateRange.startDate || dateRange.endDate) && (
+                  <X
+                    className="absolute right-2 h-4 w-4 cursor-pointer"
                     onClick={(e) => {
                       e.stopPropagation();
                       clearDateRange();
                     }}
-                    onKeyDown={(e) => {
-                      if (e.key === "Enter" || e.key === " ") {
-                        e.stopPropagation();
-                        clearDateRange();
-                      }
-                    }}
-                  >
-                    <X className="h-3 w-3" />
-                  </span>
+                  />
                 )}
               </Button>
             </PopoverTrigger>
-            <PopoverContent className="w-auto p-0" align="end">
-              <Calendar
-                initialFocus
-                mode="range"
-                defaultMonth={date.from}
-                selected={date}
-                onSelect={setDate}
-                numberOfMonths={2}
-              />
+            <PopoverContent className="p-4 space-y-4" align="end">
+              <div className="space-y-2">
+                <div className="grid gap-2">
+                  <label className="text-sm font-medium">Start Date</label>
+                  <Input
+                    type="date"
+                    value={dateRange.startDate}
+                    onChange={(e) =>
+                      setDateRange({ ...dateRange, startDate: e.target.value })
+                    }
+                    max={dateRange.endDate}
+                  />
+                </div>
+                <div className="grid gap-2">
+                  <label className="text-sm font-medium">End Date</label>
+                  <Input
+                    type="date"
+                    value={dateRange.endDate}
+                    onChange={(e) =>
+                      setDateRange({ ...dateRange, endDate: e.target.value })
+                    }
+                    min={dateRange.startDate}
+                  />
+                </div>
+              </div>
             </PopoverContent>
           </Popover>
 

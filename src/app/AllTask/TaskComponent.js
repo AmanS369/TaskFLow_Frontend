@@ -21,7 +21,6 @@ import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import { Calendar } from "lucide-react";
 import PropTypes from "prop-types";
 
 export const TaskForm = ({ group }) => {
@@ -54,8 +53,6 @@ export const TaskForm = ({ group }) => {
       fetchGroups();
     }
   }, [group]);
-
-  useEffect(() => {}, [selectedGroup]);
 
   const validateForm = () => {
     const newErrors = {};
@@ -99,6 +96,7 @@ export const TaskForm = ({ group }) => {
       "bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-200",
     High: "bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-200",
   };
+
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
       <DialogTrigger asChild>
@@ -163,6 +161,7 @@ export const TaskForm = ({ group }) => {
               ))}
             </div>
           </div>
+
           {!group && groups.length > 0 && (
             <div className="space-y-2">
               <Label>Group</Label>
@@ -204,9 +203,9 @@ export const TaskForm = ({ group }) => {
                 onChange={(e) =>
                   setTaskData({ ...taskData, due_date: e.target.value })
                 }
-                className="pl-10"
+                className="w-full"
+                min={new Date().toISOString().split("T")[0]}
               />
-              <Calendar className="absolute left-3 top-2.5 h-5 w-5 text-gray-500 dark:text-gray-400" />
             </div>
           </div>
 
@@ -226,9 +225,6 @@ export const TaskForm = ({ group }) => {
   );
 };
 
-// TaskForm.propTypes = {
-//   group: PropTypes.string,
-// };
 export const UpdateForm = ({ initialTaskData, onClose }) => {
   const [isOpen, setIsOpen] = useState(true);
   const [groups, setGroups] = useState([]);
@@ -296,7 +292,6 @@ export const UpdateForm = ({ initialTaskData, onClose }) => {
         if (!open) handleClose();
       }}
     >
-      <DialogTrigger asChild></DialogTrigger>
       <DialogContent className="sm:max-w-md">
         <DialogHeader>
           <DialogTitle>Update Task</DialogTitle>
@@ -394,30 +389,24 @@ export const UpdateForm = ({ initialTaskData, onClose }) => {
             <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
               Due Date
             </label>
-            <input
+            <Input
               type="date"
-              value={taskData.due_date}
+              value={taskData.due_date || ""}
               onChange={(e) =>
                 setTaskData({ ...taskData, due_date: e.target.value })
               }
-              className="w-full px-3 py-2 border rounded-md dark:bg-gray-800 dark:border-gray-700"
+              className="w-full"
+              min={new Date().toISOString().split("T")[0]}
             />
           </div>
 
           <div className="flex justify-end space-x-3 pt-4">
-            <button
-              type="button"
-              onClick={handleClose}
-              className="px-4 py-2 text-sm text-gray-600 hover:text-gray-800 dark:text-gray-300 dark:hover:text-gray-100"
-            >
+            <Button type="button" variant="ghost" onClick={handleClose}>
               Cancel
-            </button>
-            <button
-              type="submit"
-              className="px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700"
-            >
+            </Button>
+            <Button type="submit" variant="default">
               Update Task
-            </button>
+            </Button>
           </div>
         </form>
       </DialogContent>
