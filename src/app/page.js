@@ -86,12 +86,6 @@ const LandingPage = () => {
                   Get Started
                   <ArrowRight className="w-4 h-4" />
                 </Link>
-                <Link
-                  href="/demo"
-                  className="px-8 py-3 text-gray-600 dark:text-gray-300 border border-gray-200 dark:border-gray-800 rounded-full hover:border-gray-400 dark:hover:border-gray-600 transition-colors font-medium"
-                >
-                  Live Demo
-                </Link>
               </div>
             </div>
           </div>
