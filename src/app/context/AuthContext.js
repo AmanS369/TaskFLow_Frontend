@@ -17,6 +17,10 @@ export const AuthProvider = ({ children }) => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
 
   const checkAuth = useCallback(async () => {
+    if (window.location.pathname.match(/\/(login|register)/)) {
+      setLoading(false);
+      return;
+    }
     const accessToken = Cookies.get("accessToken");
     if (!accessToken) {
       setUser(null);

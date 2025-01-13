@@ -1,28 +1,3 @@
-// "use client";
-// import { useContext, useEffect } from "react";
-// import { useRouter } from "next/navigation";
-// import { AuthContext } from "./AuthContext";
-
-// const withAuth = (WrappedComponent) => {
-//   return (props) => {
-//     const { user } = useContext(AuthContext);
-//     const router = useRouter();
-
-//     useEffect(() => {
-//       if (!user) {
-//         // Add loading check
-//         router.replace("/");
-//       }
-//     }, [user, router]);
-
-//     if (!user) return null; // Optionally, show a loader or skeleton while redirecting
-
-//     return <WrappedComponent {...props} />;
-//   };
-// };
-
-// export default withAuth;
-// ProtectedRoute.js
 "use client";
 import { useContext, useEffect } from "react";
 import { useRouter } from "next/navigation";

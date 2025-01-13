@@ -1,5 +1,5 @@
 import axios from "axios";
-import Cookies from "js-cookie"; // For secure cookie handling
+import Cookies from "js-cookie";
 
 const BASE_URL = process.env.NEXT_PUBLIC_API_URL;
 let globalLoadingController = null;
@@ -12,7 +12,7 @@ const axiosInstance = axios.create({
   headers: {
     "Content-Type": "application/json",
   },
-  withCredentials: true, // Include credentials for secure cookies
+  withCredentials: true,
 });
 
 axiosInstance.interceptors.request.use((config) => {
